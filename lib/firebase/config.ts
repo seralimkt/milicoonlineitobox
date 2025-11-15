@@ -7,12 +7,12 @@ import { getStorage } from "firebase/storage"
 import { getAnalytics } from "firebase/analytics"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBjqDS2dm1YfgeZKxbT2E37sAuAogEUAuk",
-  authDomain: "ricuras-del-coste.firebaseapp.com",
-  projectId: "ricuras-del-coste",
-  storageBucket: "ricuras-del-coste.firebasestorage.app",
-  messagingSenderId: "362741201723",
-  appId: "1:362741201723:web:a32e54ea934c28e7dcd51e",
+  apiKey: "AIzaSyDcVYH_DsdlIdvaRuBzME6Dc9iQjSyEGpQ",
+  authDomain: "milicoonline-itobox.firebaseapp.com",
+  projectId: "milicoonline-itobox",
+  storageBucket: "milicoonline-itobox.firebasestorage.app",
+  messagingSenderId: "826975049398",
+  appId: "1:826975049398:web:a30b51fcc5b5185e91b817"
 }
 
 // Initialize Firebase

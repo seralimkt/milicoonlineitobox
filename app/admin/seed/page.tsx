@@ -4,9 +4,19 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
-import { CheckCircle2, Loader2, AlertCircle } from "lucide-react"
+import { CheckCircle2, Loader2, AlertCircle } from 'lucide-react'
 import { db } from "@/lib/firebase/config"
 import { doc, setDoc, serverTimestamp } from "firebase/firestore"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 export default function SeedPage() {
   const [isSeeding, setIsSeeding] = useState(false)
@@ -14,6 +24,7 @@ export default function SeedPage() {
   const [currentStep, setCurrentStep] = useState("")
   const [completed, setCompleted] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showHideDialog, setShowHideDialog] = useState(false)
 
   const seedDatabase = async () => {
     setIsSeeding(true)
@@ -204,7 +215,7 @@ export default function SeedPage() {
           name: "Tacos Dorados",
           description: "Tacos dorados de pollo con lechuga, crema y queso",
           price: 70,
-          imageUrl: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&q=80",
+          imageUrl: "https://images.unsplash.com/photo-1551504734-5ee1c4a3169b?w=800&q=80",
           active: true,
           order: 3,
           variations: [
@@ -402,9 +413,11 @@ export default function SeedPage() {
 
       await setDoc(doc(db, "config", "brand"), {
         businessName: "Tlayudas La Vid",
-        phone: "+573235111621",
+        phone: "+50683889614",
+        email: "jeczto@gmail.com",
         address: "Oaxaca de Juárez, Oaxaca",
         deliveryFee: 30,
+        whatsappNumber: "+50683889614",
         primaryColor: "#F4C542",
         secondaryColor: "#E67E22",
         accentColor: "#C0392B",
@@ -417,6 +430,7 @@ export default function SeedPage() {
       console.log("[v0] ✅ Configuración completada exitosamente!")
       setCompleted(true)
       setIsSeeding(false)
+      setShowHideDialog(true)
     } catch (error) {
       console.error("[v0] ❌ Error al configurar la base de datos:", error)
       setError(
@@ -425,6 +439,16 @@ export default function SeedPage() {
           : "Error desconocido al conectar con Firebase. Verifica que las reglas de Firestore estén configuradas correctamente.",
       )
       setIsSeeding(false)
+    }
+  }
+
+  const handleHideMenu = async (shouldHide: boolean) => {
+    if (shouldHide) {
+      // Store preference in localStorage
+      localStorage.setItem("hideSeedMenu", "true")
+      window.location.href = "/admin/dashboard"
+    } else {
+      setShowHideDialog(false)
     }
   }
 
@@ -481,7 +505,7 @@ export default function SeedPage() {
                   </p>
                 </div>
               </div>
-              <Button onClick={() => (window.location.href = "/admin/dashboard")} className="w-full">
+              <Button onClick={() => window.location.href = "/admin/dashboard"} className="w-full">
                 Ir al Dashboard
               </Button>
             </div>
@@ -516,6 +540,25 @@ export default function SeedPage() {
           </div>
         </CardContent>
       </Card>
+
+      <AlertDialog open={showHideDialog} onOpenChange={setShowHideDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>¿Ocultar la opción "Inicializar DB"?</AlertDialogTitle>
+            <AlertDialogDescription>
+              La base de datos se ha inicializado correctamente. ¿Deseas ocultar esta opción del menú para evitar
+              inicializar nuevamente por error?
+              <br />
+              <br />
+              Puedes volver a mostrarla en cualquier momento desde la configuración.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => handleHideMenu(false)}>No, mantener visible</AlertDialogCancel>
+            <AlertDialogAction onClick={() => handleHideMenu(true)}>Sí, ocultar opción</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

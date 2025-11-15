@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app"
 import { getFirestore, collection, addDoc, setDoc, doc } from "firebase/firestore"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBjqDS2dm1YfgeZKxbT2E37sAuAogEUAuk",
-  authDomain: "ricuras-del-coste.firebaseapp.com",
-  projectId: "ricuras-del-coste",
-  storageBucket: "ricuras-del-coste.firebasestorage.app",
-  messagingSenderId: "362741201723",
-  appId: "1:362741201723:web:a32e54ea934c28e7dcd51e",
+  apiKey: "AIzaSyDcVYH_DsdlIdvaRuBzME6Dc9iQjSyEGpQ",
+  authDomain: "milicoonline-itobox.firebaseapp.com",
+  projectId: "milicoonline-itobox",
+  storageBucket: "milicoonline-itobox.firebasestorage.app",
+  messagingSenderId: "826975049398",
+  appId: "1:826975049398:web:a30b51fcc5b5185e91b817"
 }
 
 const app = initializeApp(firebaseConfig)
@@ -21,8 +21,8 @@ async function seedFirestore() {
     console.log("[v0] Creating brand configuration...")
     await setDoc(doc(db, "brandConfig", "main"), {
       businessName: "OwnApp",
-      whatsappNumber: "+573044470307",
-      email: "lasricurasdelcosteno@gmail.com",
+      whatsappNumber: "+50683889614",
+      email: "jeczto@gmail.com",
       deliveryFee: 30,
       primaryColor: "#F4C542",
       secondaryColor: "#E67E22",

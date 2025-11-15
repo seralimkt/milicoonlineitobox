@@ -1,9 +1,9 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useRouter, usePathname } from "next/navigation"
+import { useRouter, usePathname } from 'next/navigation'
 import { signOut } from "@/lib/firebase/auth"
-import { LayoutDashboard, Package, Settings, BarChart3, LogOut, ImageIcon, Users, Menu } from "lucide-react"
+import { LayoutDashboard, Package, Settings, BarChart3, LogOut, ImageIcon, Users, Menu, Database } from 'lucide-react'
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { useState, useEffect } from "react"
@@ -15,6 +15,7 @@ export function AdminNav() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [config, setConfig] = useState<BrandConfig | null>(null)
+  const [showSeedMenu, setShowSeedMenu] = useState(true)
 
   useEffect(() => {
     const unsubscribe = subscribeToConfig((brandConfig) => {
@@ -23,25 +24,27 @@ export function AdminNav() {
     return () => unsubscribe()
   }, [])
 
+  useEffect(() => {
+    const hideSeed = localStorage.getItem("hideSeedMenu")
+    setShowSeedMenu(hideSeed !== "true")
+  }, [])
+
   const handleSignOut = async () => {
     await signOut()
     router.push("/admin/login")
   }
 
-  const navItems = [
+  const allNavItems = [
     { href: "/admin/dashboard", label: "Pedidos", icon: LayoutDashboard },
     { href: "/admin/products", label: "Productos", icon: Package },
     { href: "/admin/banners", label: "Banners", icon: ImageIcon },
     { href: "/admin/customers", label: "Clientes", icon: Users },
     { href: "/admin/reports", label: "Reportes", icon: BarChart3 },
     { href: "/admin/settings", label: "Configuración", icon: Settings },
-    // { href: "/admin/seed", label: "Inicializar DB", icon: Database },
+    { href: "/admin/seed", label: "Inicializar DB", icon: Database },
   ]
 
-  const handleMobileNavigation = (href: string) => {
-    router.push(href)
-    setMobileMenuOpen(false)
-  }
+  const navItems = showSeedMenu ? allNavItems : allNavItems.filter(item => item.href !== "/admin/seed")
 
   return (
     <nav className="sticky top-0 z-50 border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
