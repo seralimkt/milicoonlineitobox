@@ -8,9 +8,9 @@ import { Suspense } from "react"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "Ricuras del Coste",
+  title: "Milico Online",
   description: "Sistema de pedidos en línea",
-  generator: "Ricuras del Coste",
+  generator: "Milico Online",
 }
 
 export default function RootLayout({

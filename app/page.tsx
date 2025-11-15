@@ -43,7 +43,7 @@ export default function HomePage() {
             )}
           </div>
           <h1 className="mb-3 text-balance text-5xl font-bold tracking-tight text-foreground md:text-6xl">
-            Ricuras del Coste
+            Milico Online
           </h1>
           <p className="text-balance text-xl text-muted-foreground">Los mejores platillos de la región</p>
         </div>
@@ -74,7 +74,7 @@ export default function HomePage() {
         </div>
 
         <footer className="mt-16 text-center text-sm text-muted-foreground">
-          <p>Sistema de pedidos en línea - Ownapp Latam</p>
+          <p>Sistema de pedidos en línea - Itobox</p>
           <Link
             href="/admin/login"
             className="mt-2 inline-block text-xs text-muted-foreground/60 hover:text-muted-foreground transition-colors underline"
