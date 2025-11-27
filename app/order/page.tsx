@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { Spinner } from "@/components/ui/spinner"
 import { ProductDialog } from "@/components/product-detail-dialog"
+import { formatCurrency } from "@/lib/utils"
 
 export default function OrderPage() {
   const router = useRouter()
@@ -233,7 +234,7 @@ export default function OrderPage() {
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="text-balance text-lg font-bold text-foreground leading-tight">{product.name}</h3>
                       <Badge className="flex-shrink-0 bg-primary text-primary-foreground font-bold">
-                        ${product.price.toFixed(2)}
+                        {formatCurrency(product.price)}
                       </Badge>
                     </div>
                     <p className="text-pretty text-sm text-muted-foreground line-clamp-2">{product.description}</p>

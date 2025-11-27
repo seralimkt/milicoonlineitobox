@@ -13,6 +13,7 @@ import { formatDistanceToNow } from "date-fns"
 import { es } from "date-fns/locale"
 import { ProtectedRoute } from "@/components/protected-route"
 import { AdminNav } from "@/components/admin-nav"
+import { formatCurrency } from "@/lib/utils"
 
 export default function CustomersPage() {
   const [orders, setOrders] = useState<Order[]>([])
@@ -163,10 +164,9 @@ export default function CustomersPage() {
                   <div>
                     <p className="text-sm text-purple-600 font-medium">Promedio por Cliente</p>
                     <p className="text-2xl font-bold text-purple-900">
-                      $
                       {customers.length > 0
-                        ? Math.round(customers.reduce((sum, c) => sum + c.totalSpent, 0) / customers.length)
-                        : 0}
+                        ? formatCurrency(customers.reduce((sum, c) => sum + c.totalSpent, 0) / customers.length)
+                        : formatCurrency(0)}
                     </p>
                   </div>
                 </div>
@@ -278,7 +278,7 @@ export default function CustomersPage() {
                           <p className="text-muted-foreground">Pedidos</p>
                         </div>
                         <div className="text-center">
-                          <p className="font-semibold text-lg">${customer.totalSpent.toFixed(2)}</p>
+                          <p className="font-semibold text-lg">{formatCurrency(customer.totalSpent)}</p>
                           <p className="text-muted-foreground">Total</p>
                         </div>
                         <div className="text-center min-w-[100px]">
@@ -326,7 +326,7 @@ export default function CustomersPage() {
                         <div className="text-center space-y-2">
                           <DollarSign className="h-5 w-5 text-green-600 mx-auto" />
                           <p className="text-sm text-muted-foreground">Gasto Total</p>
-                          <p className="text-xl font-bold truncate">${selectedCustomer.totalSpent.toFixed(2)}</p>
+                          <p className="text-xl font-bold truncate">{formatCurrency(selectedCustomer.totalSpent)}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -336,7 +336,7 @@ export default function CustomersPage() {
                           <Calendar className="h-5 w-5 text-blue-600 mx-auto" />
                           <p className="text-sm text-muted-foreground">Promedio</p>
                           <p className="text-xl font-bold truncate">
-                            ${(selectedCustomer.totalSpent / selectedCustomer.totalOrders).toFixed(0)}
+                            {formatCurrency(selectedCustomer.totalSpent / selectedCustomer.totalOrders)}
                           </p>
                         </div>
                       </CardContent>
@@ -397,7 +397,7 @@ export default function CustomersPage() {
                                   })}
                                 </p>
                               </div>
-                              <p className="font-bold text-lg">${order.total.toFixed(2)}</p>
+                              <p className="font-bold text-lg">{formatCurrency(order.total)}</p>
                             </div>
                             <div className="space-y-2">
                               {order.items.map((item, idx) => (
@@ -410,7 +410,7 @@ export default function CustomersPage() {
                                       </span>
                                     )}
                                   </span>
-                                  <span className="font-medium">${(item.price * item.quantity).toFixed(2)}</span>
+                                  <span className="font-medium">{formatCurrency(item.price * item.quantity)}</span>
                                 </div>
                               ))}
                             </div>

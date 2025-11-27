@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ShoppingCart } from "lucide-react"
 import { useCart } from "@/lib/cart-context"
 import { useRouter } from "next/navigation"
+import { formatCurrency } from "@/lib/utils"
 
 export function CartButton() {
   const { itemCount, total } = useCart()
@@ -20,7 +21,7 @@ export function CartButton() {
       <ShoppingCart className="h-5 w-5" />
       <div className="flex flex-col items-start">
         <span className="text-xs font-medium">{itemCount} productos</span>
-        <span className="text-sm font-bold">${total.toFixed(2)}</span>
+        <span className="text-sm font-bold">{formatCurrency(total)}</span>
       </div>
     </Button>
   )

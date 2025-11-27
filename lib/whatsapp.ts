@@ -1,6 +1,7 @@
 "use client"
 
 import type { Order, BrandConfig } from "./firebase/types"
+import { formatCurrency } from "./utils"
 
 export const formatOrderForWhatsApp = (order: Order, brandConfig?: BrandConfig | null): string => {
   let message = `🆕 *NUEVO PEDIDO - ${order.orderNumber}*\n\n`
@@ -31,8 +32,8 @@ export const formatOrderForWhatsApp = (order: Order, brandConfig?: BrandConfig |
     message += `💳 *Pago:* ${paymentLabels[order.paymentMethod]}\n`
 
     if (order.paymentMethod === "cash" && order.cashAmount) {
-      message += `💵 *Paga con:* $${order.cashAmount.toFixed(2)}\n`
-      message += `💰 *Cambio:* $${(order.cashAmount - order.total).toFixed(2)}\n`
+      message += `💵 *Paga con:* ${formatCurrency(order.cashAmount)}\n`
+      message += `💰 *Cambio:* ${formatCurrency(order.cashAmount - order.total)}\n`
     }
 
     if (order.paymentMethod === "transfer" && order.paymentProofUrl) {
@@ -42,12 +43,12 @@ export const formatOrderForWhatsApp = (order: Order, brandConfig?: BrandConfig |
 
   message += `\n📋 *Productos:*\n`
   order.items.forEach((item, index) => {
-    message += `${index + 1}. ${item.productName} x${item.quantity} - $${item.price.toFixed(2)}\n`
+    message += `${index + 1}. ${item.productName} x${item.quantity} - ${formatCurrency(item.price)}\n`
     if (item.selectedVariations && item.selectedVariations.length > 0) {
       item.selectedVariations.forEach((v) => {
         message += `   • ${v.variationName}: ${v.optionName}`
         if (v.price > 0) {
-          message += ` (+$${v.price.toFixed(2)})`
+          message += ` (+${formatCurrency(v.price)})`
         }
         message += `\n`
       })
@@ -57,11 +58,11 @@ export const formatOrderForWhatsApp = (order: Order, brandConfig?: BrandConfig |
     }
   })
 
-  message += `\n💰 *Subtotal:* $${order.subtotal.toFixed(2)}\n`
+  message += `\n💰 *Subtotal:* ${formatCurrency(order.subtotal)}\n`
   if (order.deliveryFee > 0) {
-    message += `🚚 *Envío:* $${order.deliveryFee.toFixed(2)}\n`
+    message += `🚚 *Envío:* ${formatCurrency(order.deliveryFee)}\n`
   }
-  message += `💵 *Total:* $${order.total.toFixed(2)}\n`
+  message += `💵 *Total:* ${formatCurrency(order.total)}\n`
 
   if (order.notes) {
     message += `\n📝 *Notas adicionales:* ${order.notes}\n`

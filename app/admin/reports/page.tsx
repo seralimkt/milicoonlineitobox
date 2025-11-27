@@ -11,6 +11,7 @@ import { subscribeToOrders } from "@/lib/firebase/db"
 import type { Order } from "@/lib/firebase/types"
 import { TrendingUp, DollarSign, ShoppingBag, Clock, Users } from "lucide-react"
 import { Spinner } from "@/components/ui/spinner"
+import { formatCurrency } from "@/lib/utils"
 
 function ReportsContent() {
   const [orders, setOrders] = useState<Order[]>([])
@@ -211,7 +212,7 @@ function ReportsContent() {
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalRevenue.toFixed(2)}</div>
+            <div className="text-2xl font-bold">{formatCurrency(totalRevenue)}</div>
             <p className="text-xs text-muted-foreground">De pedidos completados</p>
           </CardContent>
         </Card>
@@ -222,7 +223,7 @@ function ReportsContent() {
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${averageOrderValue.toFixed(2)}</div>
+            <div className="text-2xl font-bold">{formatCurrency(averageOrderValue)}</div>
             <p className="text-xs text-muted-foreground">Por pedido completado</p>
           </CardContent>
         </Card>
@@ -253,7 +254,7 @@ function ReportsContent() {
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Ingresos:</span>
-              <span className="font-semibold text-primary">${todayRevenue.toFixed(2)}</span>
+              <span className="font-semibold text-primary">{formatCurrency(todayRevenue)}</span>
             </div>
           </CardContent>
         </Card>
@@ -269,7 +270,7 @@ function ReportsContent() {
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Ingresos:</span>
-              <span className="font-semibold text-primary">${weekRevenue.toFixed(2)}</span>
+              <span className="font-semibold text-primary">{formatCurrency(weekRevenue)}</span>
             </div>
           </CardContent>
         </Card>
@@ -285,7 +286,7 @@ function ReportsContent() {
             </div>
             <div className="flex justify-between">
               <span className="text-sm text-muted-foreground">Ingresos:</span>
-              <span className="font-semibold text-primary">${monthRevenue.toFixed(2)}</span>
+              <span className="font-semibold text-primary">{formatCurrency(monthRevenue)}</span>
             </div>
           </CardContent>
         </Card>
@@ -337,7 +338,7 @@ function ReportsContent() {
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-semibold">{product.count} vendidos</div>
-                    <div className="text-xs text-muted-foreground">${product.revenue.toFixed(2)}</div>
+                    <div className="text-xs text-muted-foreground">{formatCurrency(product.revenue)}</div>
                   </div>
                 </div>
               ))}

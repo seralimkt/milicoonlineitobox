@@ -24,6 +24,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { formatCurrency } from "@/lib/utils"
 
 function ProductsContent() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -212,7 +213,7 @@ function ProductsContent() {
                       </div>
                       <p className="mb-3 text-sm text-muted-foreground line-clamp-2">{product.description}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-lg font-bold text-primary">${product.price.toFixed(2)}</span>
+                        <span className="text-lg font-bold text-primary">{formatCurrency(product.price)}</span>
                         <div className="flex gap-2">
                           <Button variant="outline" size="sm" onClick={() => handleEditProduct(product)}>
                             <Edit className="h-4 w-4" />

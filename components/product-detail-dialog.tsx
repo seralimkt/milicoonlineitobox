@@ -11,6 +11,7 @@ import type { Product } from "@/lib/firebase/types"
 import { useCart } from "@/lib/cart-context"
 import { Plus, Minus } from "lucide-react"
 import Image from "next/image"
+import { formatCurrency } from "@/lib/utils"
 
 interface ProductDialogProps {
   open: boolean
@@ -98,7 +99,7 @@ export function ProductDialog({ open, onOpenChange, product }: ProductDialogProp
 
           <div>
             <p className="text-muted-foreground">{product.description}</p>
-            <p className="mt-2 text-2xl font-bold text-primary">${product.price.toFixed(2)}</p>
+            <p className="mt-2 text-2xl font-bold text-primary">{formatCurrency(product.price)}</p>
           </div>
 
           {product.variations && product.variations.length > 0 && (
@@ -125,7 +126,7 @@ export function ProductDialog({ open, onOpenChange, product }: ProductDialogProp
                             </label>
                           </div>
                           {option.price > 0 && (
-                            <span className="text-sm font-semibold">+${option.price.toFixed(2)}</span>
+                            <span className="text-sm font-semibold">+{formatCurrency(option.price)}</span>
                           )}
                         </div>
                       ))}
@@ -144,7 +145,7 @@ export function ProductDialog({ open, onOpenChange, product }: ProductDialogProp
                             </label>
                           </div>
                           {option.price > 0 && (
-                            <span className="text-sm font-semibold">+${option.price.toFixed(2)}</span>
+                            <span className="text-sm font-semibold">+{formatCurrency(option.price)}</span>
                           )}
                         </div>
                       ))}
@@ -188,7 +189,7 @@ export function ProductDialog({ open, onOpenChange, product }: ProductDialogProp
         <DialogFooter className="flex-col gap-2 sm:flex-col">
           <div className="flex items-center justify-between text-lg font-bold">
             <span>Total:</span>
-            <span className="text-2xl text-primary">${calculateTotal().toFixed(2)}</span>
+            <span className="text-2xl text-primary">{formatCurrency(calculateTotal())}</span>
           </div>
           <Button
             className="w-full bg-primary text-primary-foreground"

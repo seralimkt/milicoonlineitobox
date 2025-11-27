@@ -20,6 +20,7 @@ import type { BrandConfig, Order } from "@/lib/firebase/types"
 import { ArrowLeft, AlertCircle, CheckCircle2, Upload } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Spinner } from "@/components/ui/spinner"
+import { formatCurrency } from "@/lib/utils"
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -402,7 +403,7 @@ export default function CheckoutPage() {
                     <Label htmlFor="delivery" className="flex-1 cursor-pointer">
                       <div className="font-semibold">Entrega a domicilio</div>
                       <div className="text-sm text-muted-foreground">
-                        {selectedZone ? `Costo: $${selectedZone.price.toFixed(2)}` : "Selecciona tu zona"}
+                        {selectedZone ? `Costo: ${formatCurrency(selectedZone.price)}` : "Selecciona tu zona"}
                       </div>
                     </Label>
                   </div>
@@ -441,7 +442,7 @@ export default function CheckoutPage() {
                         {activeZones.length > 0 ? (
                           activeZones.map((zone) => (
                             <SelectItem key={zone.id} value={zone.id}>
-                              {zone.name} - ${zone.price.toFixed(2)}
+                              {zone.name} - {formatCurrency(zone.price)}
                             </SelectItem>
                           ))
                         ) : (
@@ -553,14 +554,14 @@ export default function CheckoutPage() {
                     type="number"
                     min={orderTotal}
                     step="0.01"
-                    placeholder={`Mínimo $${orderTotal.toFixed(2)}`}
+                    placeholder={`Mínimo ${formatCurrency(orderTotal)}`}
                     value={formData.cashAmount}
                     onChange={(e) => setFormData({ ...formData, cashAmount: e.target.value })}
                     disabled={loading}
                   />
                   {formData.cashAmount && Number.parseFloat(formData.cashAmount) > orderTotal && (
                     <p className="text-sm text-muted-foreground">
-                      Cambio: ${(Number.parseFloat(formData.cashAmount) - orderTotal).toFixed(2)}
+                      Cambio: {formatCurrency(Number.parseFloat(formData.cashAmount) - orderTotal)}
                     </p>
                   )}
                 </div>
@@ -579,7 +580,7 @@ export default function CheckoutPage() {
                     <p>
                       <span className="font-medium">Titular:</span> {brandConfig.bankInfo.accountHolder}
                     </p>
-                    <p className="font-medium text-primary">Monto a transferir: ${orderTotal.toFixed(2)}</p>
+                    <p className="font-medium text-primary">Monto a transferir: {formatCurrency(orderTotal)}</p>
                   </div>
                   <div className="space-y-2 pt-2">
                     <Label htmlFor="paymentProof">Comprobante de pago *</Label>
@@ -650,14 +651,14 @@ export default function CheckoutPage() {
                     <span className="font-medium">
                       {item.product.name} x{item.quantity}
                     </span>
-                    <span className="font-semibold">${(item.product.price * item.quantity).toFixed(2)}</span>
+                    <span className="font-semibold">{formatCurrency(item.product.price * item.quantity)}</span>
                   </div>
                   {item.selectedVariations && item.selectedVariations.length > 0 && (
                     <div className="text-sm text-muted-foreground ml-2">
                       {item.selectedVariations.map((variation, idx) => (
                         <div key={idx}>
                           • {variation.variationName}: {variation.optionName}
-                          {variation.price > 0 && ` (+$${variation.price.toFixed(2)})`}
+                          {variation.price > 0 && ` (+${formatCurrency(variation.price)})`}
                         </div>
                       ))}
                     </div>
@@ -672,17 +673,17 @@ export default function CheckoutPage() {
               <div className="border-t pt-3 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-medium">${total.toFixed(2)}</span>
+                  <span className="font-medium">{formatCurrency(total)}</span>
                 </div>
                 {deliveryFee > 0 && (
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Envío</span>
-                    <span className="font-medium">${deliveryFee.toFixed(2)}</span>
+                    <span className="font-medium">{formatCurrency(deliveryFee)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-lg font-bold pt-2 border-t">
                   <span>Total</span>
-                  <span className="text-primary">${orderTotal.toFixed(2)}</span>
+                  <span className="text-primary">{formatCurrency(orderTotal)}</span>
                 </div>
               </div>
             </CardContent>

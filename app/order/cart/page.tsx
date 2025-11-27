@@ -8,6 +8,7 @@ import { useCart } from "@/lib/cart-context"
 import { ArrowLeft, Minus, Plus, Trash2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { formatCurrency } from "@/lib/utils"
 
 export default function CartPage() {
   const router = useRouter()
@@ -74,7 +75,7 @@ export default function CartPage() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <h3 className="font-semibold text-foreground">{item.product.name}</h3>
-                        <p className="text-sm text-muted-foreground">${item.product.price.toFixed(2)} c/u</p>
+                        <p className="text-sm text-muted-foreground">{formatCurrency(item.product.price)} c/u</p>
                       </div>
                       <Button
                         variant="ghost"
@@ -111,7 +112,7 @@ export default function CartPage() {
                         <Plus className="h-4 w-4" />
                       </Button>
                       <span className="ml-auto font-semibold text-foreground">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        {formatCurrency(item.product.price * item.quantity)}
                       </span>
                     </div>
 
@@ -133,7 +134,7 @@ export default function CartPage() {
         <div className="container mx-auto">
           <div className="mb-4 flex items-center justify-between">
             <span className="text-lg font-semibold text-foreground">Total:</span>
-            <span className="text-2xl font-bold text-primary">${total.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-primary">{formatCurrency(total)}</span>
           </div>
           <Button
             size="lg"

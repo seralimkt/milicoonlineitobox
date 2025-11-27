@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import { formatCurrency } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import { ProtectedRoute } from "@/components/protected-route"
 import { AdminNav } from "@/components/admin-nav"
@@ -327,7 +327,7 @@ function SettingsContent() {
                         <div key={zone.id} className="flex items-center justify-between rounded-lg border bg-card p-3">
                           <div className="flex-1">
                             <p className="font-medium">{zone.name}</p>
-                            <p className="text-sm text-muted-foreground">${zone.price.toFixed(2)}</p>
+                            <p className="text-sm text-muted-foreground">{formatCurrency(zone.price)}</p>
                           </div>
                           <div className="flex items-center gap-2">
                             <Switch
