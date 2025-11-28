@@ -8,18 +8,25 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 import { getBrandConfig } from "@/lib/firebase/db"
 import Image from "next/image"
+import { getIconComponent } from "@/lib/icon-picker"
 
 export default function HomePage() {
   const router = useRouter()
   const [logoUrl, setLogoUrl] = useState<string>("")
+  const [heroIcon, setHeroIcon] = useState<string>("")
 
   useEffect(() => {
     getBrandConfig().then((config) => {
       if (config?.logoUrl) {
         setLogoUrl(config.logoUrl)
       }
+      if (config?.heroIcon) {
+        setHeroIcon(config.heroIcon)
+      }
     })
   }, [])
+
+  const HeroIcon = getIconComponent(heroIcon)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
@@ -27,7 +34,7 @@ export default function HomePage() {
         <div className="mb-12 text-center">
           <div className="mb-4 flex justify-center">
             {logoUrl ? (
-              <div className="relative h-32 w-32 overflow-hidden rounded-[10px] bg-white shadow-lg">
+              <div className="relative h-32 w-32 overflow-hidden rounded-full bg-white shadow-lg">
                 <Image
                   src={logoUrl || "/placeholder.svg"}
                   alt="Logo Ownapp Latam"
@@ -52,7 +59,7 @@ export default function HomePage() {
           <Card className="group cursor-pointer transition-all hover:shadow-xl hover:scale-105">
             <CardContent className="flex flex-col items-center gap-6 p-8">
               <div className="rounded-full bg-primary/10 p-6 transition-colors group-hover:bg-primary/20">
-                <UtensilsCrossed className="h-12 w-12 text-primary" />
+                <HeroIcon className="h-12 w-12 text-primary" />
               </div>
               <div className="text-center">
                 <h2 className="mb-2 text-2xl font-bold text-foreground">

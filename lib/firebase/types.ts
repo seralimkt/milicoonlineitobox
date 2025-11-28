@@ -4,6 +4,7 @@ export interface Category {
   description?: string
   order: number
   active: boolean
+  icon?: string // Added icon field for categories
   createdAt: Date
   updatedAt: Date
 }
@@ -94,6 +95,7 @@ export interface BrandConfig {
   accentColor: string
   businessName: string
   whatsappNumber: string
+  heroIcon?: string // Added heroIcon field for home page hero section
   deliveryZones: DeliveryZone[]
   paymentMethods?: {
     cash: boolean

@@ -14,6 +14,7 @@ import Image from "next/image"
 import { Spinner } from "@/components/ui/spinner"
 import { ProductDialog } from "@/components/product-detail-dialog"
 import { formatCurrency } from "@/lib/utils"
+import { getIconComponent } from "@/lib/icon-picker"
 
 export default function OrderPage() {
   const router = useRouter()
@@ -170,36 +171,36 @@ export default function OrderPage() {
             </Card>
           ) : (
             <div className="grid grid-cols-2 gap-4">
-              {categories.map((category) => (
-                <Card
-                  key={category.id}
-                  className="group cursor-pointer overflow-hidden shadow-md transition-all hover:shadow-xl hover:-translate-y-1"
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  <CardContent className="p-0">
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center p-4">
-                          <div className="mb-2 text-4xl">
-                            {category.name === "Tlayudas" && "🫓"}
-                            {category.name === "Antojitos" && "🌮"}
-                            {category.name === "Bebidas" && "🥤"}
-                            {category.name === "Postres" && "🍰"}
-                            {!["Tlayudas", "Antojitos", "Bebidas", "Postres"].includes(category.name) && "🍽️"}
+              {categories.map((category) => {
+                const CategoryIcon = getIconComponent(category.icon)
+
+                return (
+                  <Card
+                    key={category.id}
+                    className="group cursor-pointer overflow-hidden shadow-md transition-all hover:shadow-xl hover:-translate-y-1"
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    <CardContent className="p-0">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-primary/20 to-primary/5">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="text-center p-4">
+                            <div className="mb-2 flex justify-center">
+                              <CategoryIcon className="h-16 w-16 text-primary" />
+                            </div>
+                            <h3 className="text-xl font-bold text-foreground">{category.name}</h3>
                           </div>
-                          <h3 className="text-xl font-bold text-foreground">{category.name}</h3>
                         </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-                    </div>
-                    <div className="p-4">
-                      <p className="text-pretty text-sm text-muted-foreground text-center line-clamp-2">
-                        {category.description}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      <div className="p-4">
+                        <p className="text-pretty text-sm text-muted-foreground text-center line-clamp-2">
+                          {category.description}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )
+              })}
             </div>
           )
         ) : // Products view
